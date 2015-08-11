@@ -2,16 +2,20 @@ package com.un1acker.aggregator.service;
 
 import com.un1acker.aggregator.entity.Blog;
 import com.un1acker.aggregator.entity.Item;
+import com.un1acker.aggregator.entity.Role;
 import com.un1acker.aggregator.entity.User;
 import com.un1acker.aggregator.repository.BlogRepository;
 import com.un1acker.aggregator.repository.ItemRepository;
+import com.un1acker.aggregator.repository.RoleRepository;
 import com.un1acker.aggregator.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +29,9 @@ public class UserService {
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     public List<User> findAll() {
         return userRepository.findAll();
@@ -47,6 +54,12 @@ public class UserService {
     }
 
     public void save(User user) {
+        user.setEnabled(true);
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleRepository.findByName("ROLE_USER"));
+        user.setRoles(roles);
+
         userRepository.save(user);
     }
 }

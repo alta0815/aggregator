@@ -1,6 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <form:form commandName="user" cssClass="form-horizontal">
+    <c:if test="${param.success eq true}">
+        <div class="alert alert-success">Registration successfull!</div>
+    </c:if>
     <div class="form-group">
         <label for="name" class="col-sm-2 control-label">Name</label>
 
