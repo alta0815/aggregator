@@ -1,6 +1,8 @@
 package com.un1acker.aggregator.controller;
 
+import com.un1acker.aggregator.entity.Blog;
 import com.un1acker.aggregator.entity.User;
+import com.un1acker.aggregator.service.BlogService;
 import com.un1acker.aggregator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BlogService blogService;
+
     @ModelAttribute("user")
-    public User construct() {
+    public User constructUser() {
         return new User();
     }
+
+    @ModelAttribute("blog")
+    public Blog constructBlog() {
+        return new Blog();
+    }
+
     @RequestMapping("/users")
     public String users(Model model) {
         model.addAttribute("users", userService.findAll());
@@ -49,5 +60,12 @@ public class UserController {
         String name = principal.getName();
         model.addAttribute("user", userService.findOneWithBlogs(name));
         return "user-detail";
+    }
+
+    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    public String addBlog(@ModelAttribute("blog") Blog blog, Principal principal) {
+        String name = principal.getName();
+        blogService.save(blog, name);
+        return "redirect:/account.html";
     }
 }
