@@ -17,14 +17,16 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Name:</label>
+
                         <div class="col-sm-10">
-                            <form:input path="name" cssClass="form-control" />
+                            <form:input path="name" cssClass="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">URL:</label>
+
                         <div class="col-sm-10">
-                            <form:input path="url" cssClass="form-control" />
+                            <form:input path="url" cssClass="form-control"/>
                         </div>
                     </div>
 
@@ -38,25 +40,42 @@
     </div>
 </form:form>
 
-<c:forEach items="${user.blogs}" var="blog">
-    <p>${blog.name}</p>
-    <p>${blog.url}</p>
-    <table class="table table-bordered table-hover table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Link</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <c:forEach items="${blog.items}" var="item">
-                    <tr>
-                        <td>${item.title}</td>
-                        <td>${item.link}</td>
-                    </tr>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.nav-tabs a:first').tab('show');
+    });
+</script>
+
+<ul class="nav nav-tabs" role="tablist">
+    <c:forEach items="${user.blogs}" var="blog">
+        <li role="presentation"><a href="#blog_${blog.id}" aria-controls="profile" role="tab"
+                                   data-toggle="tab">${blog.name}</a></li>
+    </c:forEach>
+</ul>
+<div class="tab-content">
+    <c:forEach items="${user.blogs}" var="blog">
+        <div role="tabpane" class="tab-pane" id="blog_${blog.id}">
+            <h1>${blog.name}</h1>
+
+            <p>${blog.url}</p>
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <c:forEach items="${blog.items}" var="item">
+                <tr>
+                    <td>${item.title}</td>
+                    <td>${item.link}</td>
+                </tr>
                 </c:forEach>
-            </tr>
-        </tbody>
-    </table>
-</c:forEach>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </c:forEach>
+</div>
