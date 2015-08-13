@@ -71,11 +71,12 @@ public class UserController {
 
     @RequestMapping("/blog/delete/{id}")
     public String deleteBlog(@PathVariable Integer id) {
-        blogService.delete(id);
+        Blog blog = blogService.findOne(id);
+        blogService.delete(blog);
         return "redirect:/account.html";
     }
 
-    @RequestMapping("user/delete/{id}")
+    @RequestMapping("users/delete/{id}")
     public String deleteUser(@PathVariable Integer id) {
         userService.delete(id);
         return "redirect:/users.html";

@@ -23,7 +23,7 @@
         <c:forEach items="${users}" var="user">
             <tr>
                 <td><a href="<spring:url value="/users/${user.id}.html"/>">${user.name}</a></td>
-                <td><a href="<spring:url value="/user/delete/${user.id}.html"/>" class="btn btn-danger triggerDelete">Delete </a></td>
+                <td><a href="<spring:url value="/users/delete/${user.id}.html"/>" class="btn btn-danger triggerDelete">Delete </a></td>
             </tr>
         </c:forEach>
     </tbody>

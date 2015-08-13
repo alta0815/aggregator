@@ -5,11 +5,10 @@ import com.un1acker.aggregator.entity.User;
 import com.un1acker.aggregator.repository.BlogRepository;
 import com.un1acker.aggregator.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by un1acker on 8/11/2015.
- */
 @Service
 public class BlogService {
 
@@ -27,5 +26,14 @@ public class BlogService {
 
     public void delete(Integer id) {
         blogRepository.delete(id);
+    }
+
+    public Blog findOne(Integer id) {
+        return blogRepository.findOne(id);
+    }
+
+    @PreAuthorize("#blog.user.name == authentication.name or hasRole('ROLE_ADMIN')")
+    public void delete(@P("blog")Blog blog) {
+        blogRepository.delete(blog);
     }
 }
