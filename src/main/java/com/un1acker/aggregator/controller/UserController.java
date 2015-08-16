@@ -24,47 +24,16 @@ public class UserController {
     @Autowired
     private BlogService blogService;
 
-    @ModelAttribute("user")
-    public User constructUser() {
-        return new User();
-    }
-
     @ModelAttribute("blog")
     public Blog constructBlog() {
         return new Blog();
-    }
-
-    @RequestMapping("/users")
-    public String users(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "users";
-    }
-
-    @RequestMapping("/users/{id}")
-    public String details(Model model, @PathVariable Integer id) {
-        model.addAttribute("user", userService.findOneWithBlogs(id));
-        return "user-detail";
-    }
-
-    @RequestMapping("/register")
-    public String showRegister() {
-        return "register";
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult result) {
-        if (result.hasErrors()) {
-            return "register";
-        }
-        userService.save(user);
-        return "redirect:/register.html?success=true";
     }
 
     @RequestMapping("/account")
     public String account(Model model, Principal principal) {
         String name = principal.getName();
         model.addAttribute("user", userService.findOneWithBlogs(name));
-        return "user-detail";
+        return "account";
     }
 
     @RequestMapping(value = "/account", method = RequestMethod.POST)
@@ -82,11 +51,5 @@ public class UserController {
         Blog blog = blogService.findOne(id);
         blogService.delete(blog);
         return "redirect:/account.html";
-    }
-
-    @RequestMapping("users/delete/{id}")
-    public String deleteUser(@PathVariable Integer id) {
-        userService.delete(id);
-        return "redirect:/users.html";
     }
 }
