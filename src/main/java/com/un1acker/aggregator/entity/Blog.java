@@ -1,19 +1,22 @@
 package com.un1acker.aggregator.entity;
 
+import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
-/**
- * Created by un1acker on 8/7/2015.
- */
 @Entity
 public class Blog {
     @Id
     @GeneratedValue
     private Integer id;
 
+    @Size(min = 1, message = "Invalid url")
+    @URL(message = "Invalid url")
     private String url;
 
+    @Size(min = 1, message = "Blog name must be at least 1 character!")
     private String name;
 
     public User getUser() {
