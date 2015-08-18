@@ -56,22 +56,8 @@ public class InitDbService {
 
         Blog blog = new Blog();
         blog.setName("MyBlog");
-        blog.setUrl("http://feeds.feedburner.com/javavids?format=xml");
+        blog.setUrl("http://feeds.feedburner.com/programs4you");
         blog.setUser(userAdmin);
         blogRepository.save(blog);
-
-        Item item1 = new Item();
-        item1.setBlog(blog);
-        item1.setTitle("Blog");
-        item1.setLink("http://www.javavids.com/");
-        item1.setPublishedDate(new Date());
-        itemRepository.save(item1);
-
-        Item item2 = new Item();
-        item2.setBlog(blog);
-        item2.setTitle("BlogSecond");
-        item2.setLink("http://www.javavids.com/");
-        item2.setPublishedDate(new Date());
-        itemRepository.save(item2);
     }
 }
