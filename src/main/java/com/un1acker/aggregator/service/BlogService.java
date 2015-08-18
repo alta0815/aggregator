@@ -27,7 +27,7 @@ public class BlogService {
     private BlogRepository blogRepository;
 
     @Autowired
-    private RssService rssService;
+    private RSSService RSSService;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -41,7 +41,7 @@ public class BlogService {
 
     public void saveItems(Blog blog) {
         try {
-            List<Item> itemList = rssService.getItems(blog.getUrl());
+            List<Item> itemList = RSSService.getItems(blog.getUrl());
             for (Item item : itemList) {
                 item.setBlog(blog);
                 itemRepository.save(item);
