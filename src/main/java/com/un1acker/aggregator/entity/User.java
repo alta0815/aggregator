@@ -1,5 +1,6 @@
 package com.un1acker.aggregator.entity;
 
+import com.un1acker.aggregator.annotation.UniqueUsername;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class User {
     private Integer id;
 
     @Size(min = 3, message = "Name must be at least 3 characters")
+    @UniqueUsername(message = "Such username already exist!")
     private String name;
 
     @Size(min = 1, message = "Invalid email")
