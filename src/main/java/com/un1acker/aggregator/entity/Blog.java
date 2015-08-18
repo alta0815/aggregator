@@ -13,10 +13,12 @@ public class Blog {
     private Integer id;
 
     @Size(min = 1, message = "Invalid url")
+    @Column(length = 1000)
     @URL(message = "Invalid url")
     private String url;
 
     @Size(min = 1, message = "Blog name must be at least 1 character!")
+    @Column(length = 1000)
     private String name;
 
     public User getUser() {
