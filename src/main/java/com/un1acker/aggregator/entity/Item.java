@@ -1,12 +1,8 @@
 package com.un1acker.aggregator.entity;
 
 import javax.persistence.*;
-import javax.xml.ws.soap.MTOM;
 import java.util.Date;
 
-/**
- * Created by un1acker on 8/7/2015.
- */
 @Entity
 public class Item {
     @Id
@@ -15,6 +11,9 @@ public class Item {
 
     private String title;
 
+
+    @Lob
+    @Column(length = 100000)
     private String description;
 
     @Column(name = "published_date")

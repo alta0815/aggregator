@@ -88,16 +88,16 @@
             <table class="table table-bordered table-hover table-striped">
                 <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Link</th>
+                    <th>date</th>
+                    <th>item</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <c:forEach items="${blog.items}" var="item">
                 <tr>
-                    <td>${item.title}</td>
-                    <td>${item.link}</td>
+                    <td><c:out value="${item.publishedDate}"/></td>
+                    <td><a href="${item.link}">${item.title}</a> <br> ${item.description}</td>
                 </tr>
                 </c:forEach>
                 </tr>
