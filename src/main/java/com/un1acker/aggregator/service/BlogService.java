@@ -8,6 +8,7 @@ import com.un1acker.aggregator.repository.BlogRepository;
 import com.un1acker.aggregator.repository.ItemRepository;
 import com.un1acker.aggregator.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import java.util.List;
 
 @Service
 public class BlogService {
+
+    private static final int ONE_HOUR_IN_MSEC = 60 * 60 * 1000;
 
     @Autowired
     private UserRepository userRepository;
@@ -47,7 +50,12 @@ public class BlogService {
         } catch (RssException e) {
             e.printStackTrace();
         }
+    }
 
+    @Scheduled(fixedDelay = ONE_HOUR_IN_MSEC)
+    public void reloadBlogs() {
+        List<Blog> blogs = blogRepository.findAll();
+        blogs.forEach(this::saveItems);
     }
 
     public void delete(Integer id) {
